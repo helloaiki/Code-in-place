@@ -26,7 +26,7 @@ def banner_after_session(canvas,str):
     elif str=="X":
         canvas.create_text(340,350-50,text="X WON",font=("Comic Sans Ms",40,"bold"),fill="light blue")
     else:
-        canvas.create_text(340,350-50,text="Y WON",font=("Comic Sans Ms",40,"bold"),fill="light blue")
+        canvas.create_text(340,350-50,text="O WON",font=("Comic Sans Ms",40,"bold"),fill="light blue")
     
     canvas.create_rectangle(195,450,350,500,fill="dark blue",outline="dark blue")
     canvas.create_text(235,475,text="     PLAY",font=("Comic Sans Ms",20,"bold"),fill="light blue")
@@ -46,7 +46,86 @@ def someone_won(canvas):
     if all_places_taken:
         #draw logic
         game_ended=True
-        canvas.after(500,lambda:banner_after_session(canvas,"DRAW"))
+        won=False
+        if symbol_detector=="X":
+            count=0
+            for i in range(3):
+                for j in range(3):
+                    if place_taken_1[i][j]==1:
+                        count=count+1
+                if count==3:
+                    won=True
+                    break
+                else:
+                    count=0
+            
+            count=0
+
+            for i in range(3):
+                for j in range(3):
+                    if place_taken_1[j][i]==1:
+                        count=count+1
+                if count==3:
+                    won=True
+                    break
+                else:
+                    count=0
+            
+            count=0
+            for i in range(3):
+                if place_taken_1[i][i]==1:
+                    count=count+1
+
+            if count==3:
+                won=True
+
+            if place_taken_1[0][2]==1 and place_taken_1[1][1]==1 and place_taken_1[2][0]==1:
+                won=True
+            
+            if won:
+                canvas.after(500,lambda:banner_after_session(canvas,"X"))
+            else:
+                canvas.after(500,lambda:banner_after_session(canvas,"DRAW"))
+        else:
+            count=0
+            for i in range(3):
+                for j in range(3):
+                    if place_taken_2[i][j]==1:
+                        count=count+1
+                if count==3:
+                    won=True
+                    break
+                else:
+                    count=0
+            
+            count=0
+
+            for i in range(3):
+                for j in range(3):
+                    if place_taken_2[j][i]==1:
+                        count=count+1
+                if count==3:
+                    won=True
+                    break
+                else:
+                    count=0
+            
+            count=0
+            for i in range(3):
+                if place_taken_2[i][i]==1:
+                    count=count+1
+
+            if count==3:
+                won=True
+
+            if place_taken_2[0][2]==1 and place_taken_2[1][1]==1 and place_taken_2[2][0]==1:
+                won=True
+            
+            if won:
+                canvas.after(500,lambda:banner_after_session(canvas,"O"))
+            else:
+                canvas.after(500,lambda:banner_after_session(canvas,"DRAW"))
+            
     else:
         #checks for either X or Y winning
         won=False
@@ -125,7 +204,7 @@ def someone_won(canvas):
             
             if won:
                 game_ended=True
-                canvas.after(500,lambda:banner_after_session(canvas,"Y"))   
+                canvas.after(500,lambda:banner_after_session(canvas,"O"))   
 
 
 
